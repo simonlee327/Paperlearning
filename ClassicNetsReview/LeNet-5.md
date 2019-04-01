@@ -1,13 +1,20 @@
 # 模型结构
 ![Lenet](http://static.zybuluo.com/feixian15/bo9cgzyuomzn73jiq6o9hsuu/ScreenShot2017-07-06at12.24.42PM.png)
+
+![](https://cuijiahua.com/wp-content/uploads/2018/01/dl_3_1.png)
+
 # 各层参数详解（计算过程）
 ## 数据集和模型任务解读：
 ## 涉及到的运算
 * Convolution
+![](https://cuijiahua.com/wp-content/uploads/2018/01/dl_3_12.gif)
 * Maxpooling
 
     Use maxpooling to subsampling 
+    
+![](https://cuijiahua.com/wp-content/uploads/2018/01/dl_3_3.png)
 
+  池化是非线性下采样的一种形式，主要作用是通过减少网络的参数来减小计算量，并且能够在一定程度上控制过拟合。通常在卷积层的后面会加上一个池化层。池化包括最大池化、平均池化等。其中最大池化是用不重叠的矩形框将输入层分成不同的区域，对于每个矩形框的数取最大值作为输出层，如上图所示。
 * Full connection
 
 
