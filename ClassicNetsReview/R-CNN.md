@@ -10,11 +10,11 @@
 
 1. Ex2000+ Region ProposalsS
 
-  Selective Search： traditonal aproach ? 
+    Selective Search： traditonal aproach ? 
 
-  No parameter to learn ?
+    No parameter to learn ?
 
-  Imporvement
+    Imporvement
 
 1. 使用CNN 计算这些 2000+ Region Proposals的Features 
 
