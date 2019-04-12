@@ -80,3 +80,6 @@
 1.  CodeBook
 
     (https://blog.csdn.net/qq_37102433/article/details/60145825)
+1. 特征点和描述子
+	用描述子来进行分割？
+
