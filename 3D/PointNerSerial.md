@@ -31,10 +31,24 @@ PointNet++
 However, by design PointNet does not capture local structures induced by the metric space points live in, limiting its ability to recognize fine-grained patterns and generalizability to complex scenes
 
 # PointNet++
+
 ![](https://img-blog.csdnimg.cn/20181109173211143.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MDY2NDA5NA==,size_16,color_FFFFFF,t_70)
 
-#Insight
+## 网络架构
 
+    整个网络就是模仿的FCN，其中使用采样加分组的方式来多次运用PointNet ，相当于把pointnet当成卷积核用了，这是下采样，上采样使用KNN插值，然后对每个点和之前的特征层拼接上，用PointNet融合这些特征，多次重复这两个过程，得到每个点的K的分数
+
+## Insight
+
+1 使用采样加分组的方式来多次运用PointNet ，相当于把pointnet当成卷积核用了，解决了Point没有局部结构捕捉的问题
+
+2 使用 不同大小的分组来抵抗密度不均匀的问题 （MSG，MRG）
+![](https://img-blog.csdn.net/2018082217250689?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzM3MDExODEy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+3 相对于PointNet，精度提高，模型体积减小
+
+## 问题
+1 推理速度比PointNet慢4-7倍，比Vanilla 慢8-16倍
 
 # Reference
 https://blog.csdn.net/weixin_40664094/article/details/83902950
