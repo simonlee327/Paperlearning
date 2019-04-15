@@ -1,8 +1,13 @@
 # PointNet
 
 ![](https://img-blog.csdn.net/20180517215110916)
+## 网络架构
 
-##Insight:
+输入n*3的点集，每个点多次使用MLP，提取特征，然后再n点的相同位置的特征中找最大值，得到全局特征，对于分类，将这个全局特征经过MLP压缩成K个分数，对于分割，将这个全局特征copy n份复制到经过的MLP提取的每个点的64 c的后面得到了n\*1088的特征，1088通道然后经过MLP压缩成m类，对应m类的分数
+
+其中T-Net是学习到的仿射变换的矩阵，将原始的数据做一个仿射变换，将这个模块嵌入到网络的第一层，相当于使网络能够学习到最有利于任务的变换，将这个模块嵌入到更高级的特征层中，作用类似。
+
+## Insight:
 
 1 输入无序性问题
 
@@ -26,7 +31,7 @@ Pointnet的基本思想是对输入点云中的每一个点学习其对应的空
 
 再者现实场景中的点云往往是疏密不同的，而Pointnet是基于均匀采样的点云进行训练的，导致了其在实际场景点云中的准确率下降
 
-PointNet++
+PointNet++中的评论：
 
 However, by design PointNet does not capture local structures induced by the metric space points live in, limiting its ability to recognize fine-grained patterns and generalizability to complex scenes
 
@@ -36,13 +41,14 @@ However, by design PointNet does not capture local structures induced by the met
 
 ## 网络架构
 
-    整个网络就是模仿的FCN，其中使用采样加分组的方式来多次运用PointNet ，相当于把pointnet当成卷积核用了，这是下采样，上采样使用KNN插值，然后对每个点和之前的特征层拼接上，用PointNet融合这些特征，多次重复这两个过程，得到每个点的K的分数
+整个网络就是模仿的FCN，其中使用采样加分组的方式来多次运用PointNet ，相当于把pointnet当成卷积核用了，这是下采样，上采样使用KNN插值，然后对每个点和之前的特征层拼接上，用PointNet融合这些特征，多次重复这两个过程，得到每个点的K的分数
 
 ## Insight
 
 1 使用采样加分组的方式来多次运用PointNet ，相当于把pointnet当成卷积核用了，解决了Point没有局部结构捕捉的问题
 
 2 使用 不同大小的分组来抵抗密度不均匀的问题 （MSG，MRG）
+
 ![](https://img-blog.csdn.net/2018082217250689?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3NpbmF0XzM3MDExODEy/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
 3 相对于PointNet，精度提高，模型体积减小
@@ -50,7 +56,10 @@ However, by design PointNet does not capture local structures induced by the met
 ## 问题
 1 推理速度比PointNet慢4-7倍，比Vanilla 慢8-16倍
 
-# Reference
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/Image%203.png)
+
+## Reference
+
 https://blog.csdn.net/weixin_40664094/article/details/83902950
 
 https://blog.csdn.net/weixin_40664094/article/details/83932046
