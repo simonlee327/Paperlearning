@@ -92,11 +92,21 @@ Stage2：
 
 1 更高的IOU，MAP
 
-2 一个是OE单元，能够捕捉来自不同方向的信息
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/6.png)
+
+2 OE单元，能够捕捉来自不同方向的信息
+
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/7.png)
 
 如图，这种方向找点的方法，比PointNet++的ball qural 更加能够捕捉到合适的信息，图上就是这种情况
 
-同时，因为
+3 下采样的时候能够不丢失点，与PointNet++比较
+
+https://github.com/simonlee327/Paperlearning/blob/master/Pictures/8.png
+
+PointNet++下采样的时候，Grouping的时候有的点不属于任何一个质心，但是PointSIFT就不存在这个问题，他对每一个点都找了8个最近的点
+
+论文中说PointNet++这样Grouping，少了20%的点，影响性能，而PointFIFT中的每个点都对最终的预测有贡献
 
 3 Scale -aware ，通过堆叠OE单元
 
