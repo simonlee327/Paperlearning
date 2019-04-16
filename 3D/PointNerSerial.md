@@ -64,3 +64,27 @@ https://blog.csdn.net/weixin_40664094/article/details/83902950
 
 https://blog.csdn.net/weixin_40664094/article/details/83932046
 
+# PointSIFT
+
+## 网络架构
+
+![](https://img-blog.csdn.net/2018101611361175?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hvbmdiaW5feHU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+主要作用是提出了一个模块（PointSIFT），能够捕捉一个点周围的局部信息，输入一些具有特征的点云，输出具有更强表达能力的特征，同时，特征维度不改变。能够提高精度。
+
+## 解释
+
+![](https://img-blog.csdn.net/20181016113513202?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hvbmdiaW5feHU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+对于一个输入的点P0，它的维度是d，以他为中心，找一个半径r，空间中划分出8各区域，在每个区域中找到一个距离最近的点，总共找到八个点，然后对
+## Insight
+
+## 问题
+
+## Reference
+
+https://blog.csdn.net/hongbin_xu/article/details/83071273
+
+https://github.com/MVIG-SJTU/pointSIFT
+
+https://blog.csdn.net/shengyan5515/article/details/82965659
