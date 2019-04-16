@@ -75,26 +75,36 @@ https://blog.csdn.net/weixin_40664094/article/details/83932046
 
 ## 解释
 
-![](https://img-blog.csdn.net/20181016113513202?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2hvbmdiaW5feHU=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+1 OE单元
+
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/5.png)
+
 Stage1:
+
 对于一个输入的点P0，它的维度是d，以他为中心，找一个半径r，空间中划分出8各区域，在每个区域中找到一个距离最近的点，总共找到八个点，(如果某一个区域没有点，就认为P0是这个方向的点)
 
 Stage2：
+
 对这些点进行卷积，按照XYZ的方向进行，最终八个特征生成一个特征
 如上图所示，这八个立方体代表8个特征，首先用2*d维度的卷积核对X轴进行卷积4次，生成4个d维度的，然后对y轴，生成2个d维度的，最后对z轴，生成一个d维度的。
+
 这里有要训练的参数，也就是三个卷积核的参数。
 
 能够编码每个点的局部信息，也就是能够提取局部机构信息
+
+2 PointFIFT 模块
+
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/9.png)
 
 这是一个OE单元，方向编码模块，然后如上图，整个SIFT模块有多个OE组成，对n\*d 的输入，如果用一次，输出的每个点的感受野比较小，只有8个，但是用两次就有64个，用三次就更大了，为了能够学习到最有力的scale组合，堆叠多次OE单元，然后把他们的特征整合，最周输出一个d维的特征。
 
 ## Insight
 
-1 更高的IOU，MAP
+1 实现了更高的IOU，MAP
 
 ![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/6.png)
 
-2 OE单元，能够捕捉来自不同方向的信息
+2 OE单元，能够捕捉来自不同方向的信息，相比于Pointnet++，Grouping的时候选择的点更加合理
 
 ![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/7.png)
 
@@ -108,7 +118,7 @@ PointNet++下采样的时候，Grouping的时候有的点不属于任何一个�
 
 论文中说PointNet++这样Grouping，少了20%的点，影响性能，而PointFIFT中的每个点都对最终的预测有贡献
 
-3 Scale -aware ，通过堆叠OE单元
+4 Scale -aware ，通过堆叠OE单元
 
 作者说他做了一个实验，产生大小不同的基本形状，然后，观察到，底层的OE单元对小尺度的有反应，高层的对大尺度的有反应，证明了Scale-aware
 
@@ -116,6 +126,8 @@ PointNet++下采样的时候，Grouping的时候有的点不属于任何一个�
 ## 问题
 
 1 效率低，运行慢
+
+2 复现困难？？
 
 ## Reference
 
