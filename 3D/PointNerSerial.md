@@ -134,7 +134,8 @@ PointNet++下采样的时候，Grouping的时候有的点不属于任何一个�
 更详细的说明，就是PointNet能够提取点云的特征，这是在论文中已经证明过了的，可以逼近任意一个连续函数，但是PointSIFT能不能这样做呢？PointSIFT论文中说它也可以提取特征
 
 另外，因为没有看代码，还有架构上的细节没弄清楚，比如有一段说将FP用在下采样中，FP是上采样的模块怎么用在上采样中，还有他证明PointSIFT有效的对比试验，他没有说清楚表格中的说明是什么意思
-
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/10.png)
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/11.png)
 ## Reference
 
 https://www.sohu.com/a/241154838_129720
