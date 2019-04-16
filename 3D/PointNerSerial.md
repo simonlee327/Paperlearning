@@ -90,27 +90,27 @@ Stage2：
 
 这里有要训练的参数，也就是三个卷积核的参数。
 
-能够编码每个点的局部信息，也就是能够提取局部机构信息
+能够编码每个点的局部信息，也就是能够提取局部结构信息
 
 2 PointFIFT 模块
 
 ![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/9.png)
 
-这是一个OE单元，方向编码模块，然后如上图，整个SIFT模块有多个OE组成，对n\*d 的输入，如果用一次，输出的每个点的感受野比较小，只有8个，但是用两次就有64个，用三次就更大了，为了能够学习到最有力的scale组合，堆叠多次OE单元，然后把他们的特征整合，最周输出一个d维的特征。
+这是一个OE单元，方向编码模块，然后如上图，整个SIFT模块有多个OE组成，对n\*d 的输入，如果用一次，输出的每个点的感受野比较小，只有8个，但是用两次就有64个，用三次就更大了，为了能够学习到最有力的scale组合，堆叠多次OE单元，然后把他们的特征整合，最后输出一个d维的特征。
 
 ## Insight
 
-1 实现了更高的IOU，MAP
+### 1 实现了更高的mIoU，Accuracy
 
 ![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/6.png)
 
-2 OE单元，能够捕捉来自不同方向的信息，相比于Pointnet++，Grouping的时候选择的点更加合理
+### 2 OE单元，能够捕捉来自不同方向的信息，相比于Pointnet++，Grouping的时候选择的点更加合理
 
 ![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/7.png)
 
 如图，这种方向找点的方法，比PointNet++的ball qural 更加能够捕捉到合适的信息，图上就是这种情况
 
-3 下采样的时候能够不丢失点，与PointNet++比较
+### 3 下采样的时候能够不丢失点，与PointNet++比较
 
 https://github.com/simonlee327/Paperlearning/blob/master/Pictures/8.png
 
@@ -118,9 +118,9 @@ PointNet++下采样的时候，Grouping的时候有的点不属于任何一个�
 
 论文中说PointNet++这样Grouping，少了20%的点，影响性能，而PointFIFT中的每个点都对最终的预测有贡献
 
-4 Scale -aware ，通过堆叠OE单元
+### 4 Scale -aware
 
-作者说他做了一个实验，产生大小不同的基本形状，然后，观察到，底层的OE单元对小尺度的有反应，高层的对大尺度的有反应，证明了Scale-aware
+作者说他做了一个实验，产生大小不同的基本形状，然后，观察到，底层的OE单元对小尺度的有反应，高层的对大尺度的有反应，证明了Scale-aware,堆叠多个OE有用
 
 
 ## 问题
@@ -128,6 +128,12 @@ PointNet++下采样的时候，Grouping的时候有的点不属于任何一个�
 1 效率低，运行慢
 
 2 复现困难？？
+
+3 我认为PointSIFT和SA层中的结构重复了，PointSIFT本省已经能够提取点的局部特征，那就可以代替PointNet，只需要做一个减少Point的数量的操作，下采样的过程就完成了。
+
+更详细的说明，就是PointNet能够提取点云的特征，这是在论文中已经证明过了的，可以逼近任意一个连续函数，但是PointSIFT能不能这样做呢？PointSIFT论文中说它也可以提取特征
+
+另外，因为没有看代码，还有架构上的细节没弄清楚，比如有一段说将FP用在下采样中，FP是上采样的模块怎么用在上采样中，还有他证明PointSIFT有效的对比试验，他没有说清楚表格中的说明是什么意思
 
 ## Reference
 
