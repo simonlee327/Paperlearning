@@ -35,6 +35,13 @@ PointNet++中的评论：
 
 However, by design PointNet does not capture local structures induced by the metric space points live in, limiting its ability to recognize fine-grained patterns and generalizability to complex scenes
 
+3 Pooling 丢失信息
+
+    Pooling丢失信息，本身卷积这种提取去局部信息的方式是不丢失信息的，但是PointNet用了Pooing，就会丢失信息？？
+这就是Pooling的副作用
+但是是他的维度还变多了，这些信息是不是隐藏在这些维度中了？
+
+    这个观点在PointCNN中提出来的
 # PointNet++
 
 ![](https://img-blog.csdnimg.cn/20181109173211143.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MDY2NDA5NA==,size_16,color_FFFFFF,t_70)

@@ -80,6 +80,9 @@
 1.  CodeBook
 
     (https://blog.csdn.net/qq_37102433/article/details/60145825)
+
 1. 特征点和描述子
 	用描述子来进行分割？
 
+1. 空间编码 和特征提取有什么关系，应该是一回事吧 我觉得？ 就是传统的那些sift 算子，也是特征提取啊 就是它的参数是人工选择的  
+ https://blog.csdn.net/holybin/article/details/28619025
