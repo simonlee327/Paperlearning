@@ -152,3 +152,103 @@ https://blog.csdn.net/hongbin_xu/article/details/83071273
 https://github.com/MVIG-SJTU/pointSIFT
 
 https://blog.csdn.net/shengyan5515/article/details/82965659
+
+
+# PointCNN
+
+提出了用于点云数据的卷积运算方法，使用了这种类似于二维的卷积算子，然后整个网络类似于Unet，达到了高于PointNet++的效果。
+
+## 文章内容
+
+在论文里面写的很详细，我就大概记录一下
+
+首先，他用直接在点云数据上面用卷积，发现了一些问题，比如排序不变性，还有无法记录点云的局部形状的信息
+
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/12.png)
+
+比如2和3就是这样，本来应该是不同的，但是放到矩阵中就相同了，而3和4也是，本来应该是相同的结构，但是因为在矩阵中的顺序是不固定的，就不同了，这就是上面提到的两个问题
+
+然后作者希望学习到一个变换矩阵，能够使输入的特征具有排序不变性，同时又能够反应局部的结构信息，就像二维的卷积那样。然后搭建一个分层的网络结构如下图：
+
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/14.png)
+
+具体是这样做的：
+
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/16.png)
+## 卷积运算
+输入就是找到代表点的邻域的点，然后对这些点进行处理，最终输出一个特征
+
+首先搜索用的是随即搜索，但是对于分割任务用的是FPS，找出代表点，然后找出K个近邻
+
+1 坐标变化
+
+2对坐标进行生维，进行更抽象的表示，来和特征向量进行匹配
+
+3 把升维之后的坐标矩阵和特征矩阵拼接
+
+4 将坐标变化之后的坐标矩阵MLP,学到X变化矩阵
+
+5 对拼接之后的特征矩阵进行X变换
+
+6 常规的卷积，也就是加权和运算，最终生成一个特征
+
+## 整体架构
+
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/17.png)
+
+普通的分层卷积，b里面使用了扩张卷积的方法，c里面的反卷积需要看一下
+
+Unet
+
+## 实验结果
+
+1 分类：
+
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/18.png)
+
+
+
+
+2 分割
+
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/19.png)
+
+3 消融实验
+
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/21.png)
+
+第二个是直接使用卷积，没有X变换的，3和4是为了保持参数量一致，增加了网络的宽度或者是深度，最终证明使用了X变换的效果好，而不是因为参数两增加了
+
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/20.png)
+
+这个实验很有意思，他证明了能够对不同的排序输出相似的结果，排序不变性
+
+图中的每个点都代表和卷积进行加权和的一个矩阵，也就是算法里面坐标提升维度之后和它对应的特征拼接生成的矩阵，但是对于同样的结构，有不同的排序，也就是矩阵的行有可能是交换了的，所以有不同数据点，途中的不同颜色他们的代表点不同，相同颜色哪些点都属于同一个代表点，也就是同一个Patch，二维图像中的，
+
+在理想情况下，对于同一个Patch，不同的排序所产生的特征矩阵应该是相同的，也就是对途中的相同的点，
+
+第三张图代表经过了变换的特征，他们高度相似，距离很近,证明了排序不变性。
+
+## 总结
+
+1 这个和PointNet相比，提出了不同的解决排序不变性的方法，也就是学习一个矩阵，作者说Pooling的方式会丢掉一些信息，这样做更好，同时参数也会减少，有点像T-Net
+
+2 更高的精度
+
+3 更快的速度：（对比PointNet和PointNet++）
+
+![](https://github.com/simonlee327/Paperlearning/blob/master/Pictures/22.png)
+
+## 问题
+
+1 作者也说，对于排序不变性没有解决的很好
+
+2 搜索的时候也可能漏掉点？
+
+3 
+## reference
+
+https://www.cnblogs.com/elliottzheng/p/9100254.html
+
+https://blog.csdn.net/qq_15602569/article/details/79560614
+
