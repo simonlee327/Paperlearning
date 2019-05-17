@@ -1,0 +1,12 @@
+3D Semantic label benchmark:
+MVPNet
+joint point-based
+HPEIN
+DVVNet
+CCRFNet
+LAP-D
+PNET2
+
+3D Semantic instance benchmark:
+Seg-Cluster
+
